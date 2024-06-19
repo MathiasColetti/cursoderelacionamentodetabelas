@@ -4,11 +4,10 @@ import com.mathias.coletti.demo.springJPAProject.Repositorio.ColaboradorReposito
 import com.mathias.coletti.demo.springJPAProject.models.Colaborador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/colaboradores")
@@ -25,6 +24,20 @@ public class ColaboradorController {
         } else {
             return ResponseEntity.ok(colaboradors);
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Colaborador> findById(@PathVariable Long id){
+        Colaborador colaborador = colaboradorRepository.findById(id).get();
+        if (colaborador == null) {
+            return ResponseEntity.notFound().build();
+        }else {
+            return ResponseEntity.ok(colaborador);
+        }
+    }
+    @PostMapping
+    public Colaborador add(@RequestBody Colaborador colaborador){
+        return colaboradorRepository.save(colaborador);
     }
 
 }
