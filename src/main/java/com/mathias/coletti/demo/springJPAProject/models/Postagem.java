@@ -15,7 +15,7 @@ public class Postagem {
     private String texto;
 
     @OneToMany
-    @JoinColumn(name = "codigo_postagem")
+    @JoinColumn(name = "codigo_postagem", referencedColumnName = "")
     private List<Comentario> comentarios;
 
     public Postagem() {
